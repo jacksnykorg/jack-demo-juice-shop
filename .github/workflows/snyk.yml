@@ -1,0 +1,81 @@
+name: Snyk Security Demo
+
+on:
+  push:
+    branches: [ new-feature-2 ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      # ================================
+      # Dependency Scan
+      # ================================
+      - 
+
+      - name: Snyk frontend vulnerability scan
+        uses: snyk/actions/node@master
+        continue-on-error: false
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --all-projects --severity-threshold=high --sarif-file-output=frontend-deps.sarif
+
+      - name: Upload frontend security report
+        uses: github/codeql-action/upload-sarif@v3
+        if: hashFiles('frontend-deps.sarif') != ''
+        with:
+          sarif_file: frontend-deps.sarif
+          category: frontend-deps
+
+      # ================================
+      # Code Quality Scan
+      # ================================
+      - name: Snyk code quality scan
+        uses: snyk/actions/node@master
+        continue-on-error: false
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: code test
+          args: --severity-threshold=critical --sarif-file-output=code-scan.sarif
+
+      - name: Upload code quality report
+        uses: github/codeql-action/upload-sarif@v3
+        if: hashFiles('code-scan.sarif') != ''
+        with:
+          sarif_file: code-scan.sarif
+          category: code-scan
+
+      # ================================
+      # Infrastructure as Code Scan
+      # ================================
+      - name: Snyk IaC scan
+        uses: snyk/actions/iac@master
+        continue-on-error: false
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=critical --sarif-file-output=iac-scan.sarif
+
+      - name: Upload IaC security report
+        uses: github/codeql-action/upload-sarif@v3
+        if: hashFiles('iac-scan.sarif') != ''
+        with:
+          sarif_file: iac-scan.sarif
+          category: iac-scan
