@@ -1,5 +1,6 @@
 name: Snyk Security Demo
 
+# Trigger on push to the feature branch and pull requests against main
 on:
   push:
     branches: [ new-feature-2 ]
@@ -10,6 +11,7 @@ jobs:
   security-scan:
     runs-on: ubuntu-latest
     permissions:
+      # Required for uploading SARIF reports
       security-events: write
       actions: read
       contents: read
@@ -19,21 +21,23 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Node.js
+        # Using a specific stable version tag
         uses: actions/setup-node@v4
         with:
           node-version: '16'
 
       # ================================
-      # Dependency Scan
+      # Dependency Scan (snyk test)
       # ================================
-      - 
 
       - name: Snyk frontend vulnerability scan
-        uses: snyk/actions/node@master
+        # Using the correct, stable version of the Node action
+        uses: snyk/actions/node@v4 
         continue-on-error: false
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
+          # This action defaults to 'snyk test'
           args: --all-projects --severity-threshold=high --sarif-file-output=frontend-deps.sarif
 
       - name: Upload frontend security report
@@ -44,10 +48,11 @@ jobs:
           category: frontend-deps
 
       # ================================
-      # Code Quality Scan
+      # Code Quality Scan (snyk code test)
       # ================================
       - name: Snyk code quality scan
-        uses: snyk/actions/node@master
+        # CORRECTED: Must use the generic CLI action for 'snyk code test'
+        uses: snyk/actions/cli@v1 
         continue-on-error: false
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -63,14 +68,16 @@ jobs:
           category: code-scan
 
       # ================================
-      # Infrastructure as Code Scan
+      # Infrastructure as Code Scan (snyk iac test)
       # ================================
       - name: Snyk IaC scan
-        uses: snyk/actions/iac@master
+        # Using the correct, stable version of the IaC action
+        uses: snyk/actions/iac@v1 
         continue-on-error: false
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
+          # This action defaults to 'snyk iac test'
           args: --severity-threshold=critical --sarif-file-output=iac-scan.sarif
 
       - name: Upload IaC security report
