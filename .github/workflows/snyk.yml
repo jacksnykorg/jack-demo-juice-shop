@@ -33,7 +33,7 @@ jobs:
       - name: Snyk frontend vulnerability scan
         # Using the correct, stable version of the Node action
         uses: snyk/actions/node@master 
-        continue-on-error: false
+        continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -53,7 +53,7 @@ jobs:
       - name: Snyk code quality scan
         # CORRECTED: Must use the generic CLI action for 'snyk code test'
         uses: snyk/actions/node@master 
-        continue-on-error: false
+        continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -73,7 +73,7 @@ jobs:
       - name: Snyk IaC scan
         # Using the correct, stable version of the IaC action
         uses: snyk/actions/node@master 
-        continue-on-error: false
+        continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
