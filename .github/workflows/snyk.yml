@@ -11,7 +11,7 @@ jobs:
   security-scan:
     runs-on: ubuntu-latest
     permissions:
-      security-events: write # Correct permission for SARIF upload
+      security-events: write # Correct perfmission for SARIF upload
       actions: read
       contents: read
 
