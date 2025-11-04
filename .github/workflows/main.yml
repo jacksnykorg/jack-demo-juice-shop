@@ -1,6 +1,8 @@
 name: Example workflow for Node using Snyk
 
-on: push
+on: 
+  push: 
+    branches: [ CICD-demo ]
 
 jobs:
   security:
