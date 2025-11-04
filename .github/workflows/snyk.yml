@@ -1,7 +1,7 @@
 name: Snyk W/ GH Security test
 on:
   push:
-    branches: [ main ]
+    branches: [ CICD-demo ]
 jobs:
   code-analysis:
     name: Snyk Code Scan & GH security upload
