@@ -4,8 +4,8 @@ name: Snyk Security Demo
 on:
   push:
     branches: [ new-feature-2, CICD-demo]
-  pull_request:
-    branches: [ main ]
+  ##pull_request:
+    ##branches: [ main ]
 
 jobs:
   security-scan:
