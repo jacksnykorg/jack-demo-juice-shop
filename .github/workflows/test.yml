@@ -1,9 +1,25 @@
-name: Simple Test
-
-on: push
+name: Event Debugger
+on:
+  push:
+    branches:
+      - '**'   # listen to pushes on all branches
+  merge_group:
+  pull_request:
+    types: [opened, synchronize, closed]
 
 jobs:
-  test-job:
+  log-event:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Workflow was triggered!"
+      - name: Show event name
+        run: echo "Event: ${{ github.event_name }}"
+      - name: Show ref
+        run: echo "Ref: ${{ github.ref }}"
+      - name: Show actor
+        run: echo "Actor: ${{ github.actor }}"
+      - name: Dump full event payload
+        run: |
+          echo "Full event payload:"
+          cat <<EOF
+          ${{ toJson(github) }}
+          EOF
