@@ -5,7 +5,7 @@ on:
   push:
     branches: [ new-feature-2, CICD-demo]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   security-scan:
