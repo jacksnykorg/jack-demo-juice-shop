@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       # ================================
-      # Dependency Scan (snyk test) ######
+      # Dependency Scan (snyk test) 
       # ================================
       - name: Snyk vulnerability scan
         uses: snyk/actions/node@master 
