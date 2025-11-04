@@ -1,4 +1,4 @@
-name: Snyk W/ GH Security
+name: Snyk W/ GH Security test
 on:
   push:
     branches: [ main ]
