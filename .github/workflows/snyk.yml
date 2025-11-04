@@ -36,15 +36,14 @@ jobs:
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          # This action defaults to 'snyk test'
-          args: --all-projects --severity-threshold=high --sarif > snykcode.sarif
+        run: snyk test --all-projects --severity-threshold=high --sarif > snyk-security.sarif
 
       - name: Upload frontend security report
         uses: github/codeql-action/upload-sarif@v3
+        if: hashFiles('frontend-deps.sarif') != ''
         with:
-          sarif_file: snykcode.sarif
-          category: frontend-deps
+          sarif_file: snyk-security.sarif
+          category: Opensource-deps
 
       # ================================
       # Code Quality Scan (snyk code test)
@@ -55,9 +54,7 @@ jobs:
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: code test
-          args: --severity-threshold=high --sarif > code-scan.sarif
+        run: code test --severity-threshold=high --sarif > code-scan.sarif
 
       - name: Upload code quality report
         uses: github/codeql-action/upload-sarif@v3
@@ -75,9 +72,7 @@ jobs:
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          # This action defaults to 'snyk iac test'
-          args: --severity-threshold=critical --sarif > iac-scan.sarif
+        run: snyk iac test --severity-threshold=critical --sarif > iac-scan.sarif
 
       - name: Upload IaC security report
         uses: github/codeql-action/upload-sarif@v3
