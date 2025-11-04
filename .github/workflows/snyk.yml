@@ -3,7 +3,7 @@ name: Snyk Security Demo
 # Trigger on push to the feature branch and pull requests against main
 on:
   push:
-    branches: [ new-feature-2 ]
+    branches: [ new-feature-2, CICD-demo]
   pull_request:
     branches: [ main ]
 
@@ -11,8 +11,7 @@ jobs:
   security-scan:
     runs-on: ubuntu-latest
     permissions:
-      # Required for uploading SARIF reports
-      security-events: write
+      security-events: write # Correct perfmission for SARIF upload
       actions: read
       contents: read
 
@@ -21,47 +20,45 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Node.js
-        # Using a specific stable version tag
         uses: actions/setup-node@v4
         with:
           node-version: '16'
 
+      # Install Snyk CLI globally once for all subsequent 'run' steps
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
       # ================================
       # Dependency Scan (snyk test)
       # ================================
-
       - name: Snyk vulnerability scan
-        # Using the correct, stable version of the Node action
-        uses: snyk/actions/node@master 
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          # This action defaults to 'snyk test'
-          args: --all-projects --severity-threshold=high --sarif > snykcode.sarif
+        # Standard 'run' step allows for shell redirection (>)
+        run: snyk test --all-projects --severity-threshold=high --sarif > snyk-security.sarif
 
-      - name: Upload frontend security report
+      - name: Upload dependency security report
         uses: github/codeql-action/upload-sarif@v3
+        # CORRECTED: Ensure hashFiles checks the actual file name
+        if: always() && hashFiles('snyk-security.sarif') != '' 
         with:
-          sarif_file: snykcode.sarif
-          category: frontend-deps
+          sarif_file: snyk-security.sarif
+          category: Opensource-deps
 
       # ================================
       # Code Quality Scan (snyk code test)
       # ================================
       - name: Snyk code quality scan
-        # CORRECTED: Must use the generic CLI action for 'snyk code test'
-        uses: snyk/actions/node@master 
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: code test
-          args: --severity-threshold=high --sarif > code-scan.sarif
+        # CORRECTED: Added 'snyk' prefix to the run command
+        run: snyk code test --severity-threshold=high --sarif > code-scan.sarif
 
       - name: Upload code quality report
         uses: github/codeql-action/upload-sarif@v3
-        if: hashFiles('code-scan.sarif') != ''
+        if: always() && hashFiles('code-scan.sarif') != ''
         with:
           sarif_file: code-scan.sarif
           category: code-scan
@@ -70,18 +67,14 @@ jobs:
       # Infrastructure as Code Scan (snyk iac test)
       # ================================
       - name: Snyk IaC scan
-        # Using the correct, stable version of the IaC action
-        uses: snyk/actions/node@master 
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          # This action defaults to 'snyk iac test'
-          args: --severity-threshold=critical --sarif > iac-scan.sarif
+        run: snyk iac test --severity-threshold=critical --sarif > iac-scan.sarif
 
       - name: Upload IaC security report
         uses: github/codeql-action/upload-sarif@v3
-        if: hashFiles('iac-scan.sarif') != ''
+        if: always() && hashFiles('iac-scan.sarif') != ''
         with:
           sarif_file: iac-scan.sarif
           category: iac-scan
