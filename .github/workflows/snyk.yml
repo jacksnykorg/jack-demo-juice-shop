@@ -1,7 +1,10 @@
 name: Snyk Security Demo
 
-on: [push]
+on:
+  push:
+    branches: [ CICD-demo ]
 
+ 
 jobs:
   security-scan:
     runs-on: ubuntu-latest
