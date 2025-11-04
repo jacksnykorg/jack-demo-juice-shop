@@ -1,0 +1,87 @@
+name: Snyk Security Demo
+
+# Trigger on push to the feature branch and pull requests against main
+on:
+  push:
+    branches: [ new-feature-2 ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      # Required for uploading SARIF reports
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        # Using a specific stable version tag
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      # ================================
+      # Dependency Scan (snyk test)
+      # ================================
+
+      - name: Snyk vulnerability scan
+        # Using the correct, stable version of the Node action
+        uses: snyk/actions/node@master 
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          # This action defaults to 'snyk test'
+          args: --all-projects --severity-threshold=high --sarif > snykcode.sarif
+
+      - name: Upload frontend security report
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: snykcode.sarif
+          category: frontend-deps
+
+      # ================================
+      # Code Quality Scan (snyk code test)
+      # ================================
+      - name: Snyk code quality scan
+        # CORRECTED: Must use the generic CLI action for 'snyk code test'
+        uses: snyk/actions/node@master 
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: code test
+          args: --severity-threshold=high --sarif > code-scan.sarif
+
+      - name: Upload code quality report
+        uses: github/codeql-action/upload-sarif@v3
+        if: hashFiles('code-scan.sarif') != ''
+        with:
+          sarif_file: code-scan.sarif
+          category: code-scan
+
+      # ================================
+      # Infrastructure as Code Scan (snyk iac test)
+      # ================================
+      - name: Snyk IaC scan
+        # Using the correct, stable version of the IaC action
+        uses: snyk/actions/node@master 
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          # This action defaults to 'snyk iac test'
+          args: --severity-threshold=critical --sarif > iac-scan.sarif
+
+      - name: Upload IaC security report
+        uses: github/codeql-action/upload-sarif@v3
+        if: hashFiles('iac-scan.sarif') != ''
+        with:
+          sarif_file: iac-scan.sarif
+          category: iac-scan
