@@ -3,7 +3,7 @@ name: Snyk Security Demo
 # Trigger on push to the feature branch and pull requests against main
 on:
   push:
-    branches: [ new-feature-2 ]
+    branches: [ new-feature-2, CICD-demo]
   pull_request:
     branches: [ main ]
 
