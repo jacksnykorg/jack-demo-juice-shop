@@ -2,7 +2,7 @@ name: Snyk Security Demo
 
 on:
   push:
-    branches: [ CICD-demo ]
+    branches: [ CICD-demo, new-feature-2 ]
 
  
 jobs:
