@@ -84,6 +84,7 @@ resource "aws_s3_bucket" "snyk_storage" {
 
 resource "aws_s3_bucket" "my-new-undeployed-bucket" {
   bucket = "${var.cluster_name}"
+
 }
 
 resource "aws_s3_bucket_public_access_block" "snyk_public" {
