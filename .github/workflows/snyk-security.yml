@@ -49,17 +49,47 @@ jobs:
       # Code Scan (snyk code test)
       # ================================
       - name: Snyk code quality scan
-        uses: snyk/actions/node@master 
-        continue-on-error: true
+        uses: snyk/actions/node@master
+        continue-on-error: true # Ensures upload step always runs
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: code test
           args: '--sarif-file-output=code-scan.sarif'
 
+      - name: Replace level note/warning/error for SAST findings
+        # Add an 'if' to only run if the file exists
+        if: hashFiles('code-scan.sarif') != ''
+        run: | 
+          jq '
+            walk(
+              if type == "object" and has("id") and has("defaultConfiguration") and .defaultConfiguration.level then
+                # Create or update properties bag with security-severity
+                if has("properties") then
+                  .properties += {"security-severity": (
+                    if .defaultConfiguration.level == "note" then "2"
+                    elif .defaultConfiguration.level == "warning" then "5" 
+                    elif .defaultConfiguration.level == "error" then "8"
+                    else "0"
+                    end
+                  )}
+                else
+                  . + {"properties": {"security-severity": (
+                    if .defaultConfiguration.level == "note" then "2"
+                    elif .defaultConfiguration.level == "warning" then "5" 
+                    elif .defaultConfiguration.level == "error" then "8"
+                    else "0"
+                    end
+                  )}}
+                end
+              else .
+              end
+            )
+          ' code-scan.sarif > code-scan_updated.sarif && mv code-scan_updated.sarif code-scan.sarif
+
       - name: Upload code quality report
-        uses: github/codeql-action/upload-sarif@v2
-        # FIXED: Added always()
+        uses: github/codeql-action/upload-sarif@v3
+        # This condition is correct: always run, but only upload if file exists
         if: always() && hashFiles('code-scan.sarif') != ''
         with:
           sarif_file: code-scan.sarif
