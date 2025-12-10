@@ -1,0 +1,1411 @@
+{
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata01/os/schemas/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "originalUriBaseIds": {
+        "PROJECTROOT": {
+          "uri": "file:///Users/jackpacheco/git/juice-shop/",
+          "description": {
+            "text": "The root directory for all project files."
+          }
+        }
+      },
+      "tool": {
+        "driver": {
+          "name": "Snyk IaC",
+          "fullName": "Snyk Infrastructure as Code",
+          "version": "1.1300.0",
+          "informationUri": "https://docs.snyk.io/products/snyk-infrastructure-as-code",
+          "rules": [
+            {
+              "id": "SNYK-CC-TF-124",
+              "name": "S3BucketVersioningDisabled",
+              "shortDescription": {
+                "text": "Low severity - S3 bucket versioning disabled"
+              },
+              "fullDescription": {
+                "text": "Low severity - S3"
+              },
+              "help": {
+                "text": "The issue is... \nS3 bucket versioning is disabled\n\n The impact of this is... \n Changes or deletion of objects will not be reversible\n\n You can resolve this by... \nFor AWS provider < v4.0.0, set `versioning.enabled` attribute to `true`. For AWS provider >= v4.0.0, add aws_s3_bucket_versioning resource.",
+                "markdown": "**The issue is...** \nS3 bucket versioning is disabled\n\n **The impact of this is...** \n Changes or deletion of objects will not be reversible\n\n **You can resolve this by...** \nFor AWS provider < v4.0.0, set `versioning.enabled` attribute to `true`. For AWS provider >= v4.0.0, add aws_s3_bucket_versioning resource."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "S3"
+                ],
+                "problem": {
+                  "severity": "low"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-TF-124"
+            },
+            {
+              "id": "SNYK-CC-TF-127",
+              "name": "S3BucketMfaDeleteControlDisabled",
+              "shortDescription": {
+                "text": "Low severity - S3 bucket MFA delete control disabled"
+              },
+              "fullDescription": {
+                "text": "Low severity - S3"
+              },
+              "help": {
+                "text": "The issue is... \nS3 bucket will not enforce MFA login on delete requests\n\n The impact of this is... \n Object could be deleted without stronger MFA authorization\n\n You can resolve this by... \nFollow instructions in `https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiFactorAuthenticationDelete.html` to manually configure the MFA setting. For AWS provider < v4.0.0 set `versioning.mfa_delete` attribute to `true` in aws_s3_bucket resource. For AWS provider >= v4.0.0 set 'versioning_configuration.mfa_delete` attribute to `Enabled`. The terraform change is required to reflect the setting in the state file",
+                "markdown": "**The issue is...** \nS3 bucket will not enforce MFA login on delete requests\n\n **The impact of this is...** \n Object could be deleted without stronger MFA authorization\n\n **You can resolve this by...** \nFollow instructions in `https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiFactorAuthenticationDelete.html` to manually configure the MFA setting. For AWS provider < v4.0.0 set `versioning.mfa_delete` attribute to `true` in aws_s3_bucket resource. For AWS provider >= v4.0.0 set 'versioning_configuration.mfa_delete` attribute to `Enabled`. The terraform change is required to reflect the setting in the state file"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "S3"
+                ],
+                "problem": {
+                  "severity": "low"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-TF-127"
+            },
+            {
+              "id": "SNYK-CC-TF-97",
+              "name": "S3IgnorePublicAcLsControlIsDisabled",
+              "shortDescription": {
+                "text": "High severity - S3 ignore public ACLs control is disabled"
+              },
+              "fullDescription": {
+                "text": "High severity - S3"
+              },
+              "help": {
+                "text": "The issue is... \nBucket will recognize public ACLs and allow public access\n\n The impact of this is... \n If public ACL is attached to the bucket, anyone will be able to read and/or write to the bucket.\n\n You can resolve this by... \nSet `aws_s3_bucket_public_access_block` `ignore_public_acls` attribute to `true`, or use default",
+                "markdown": "**The issue is...** \nBucket will recognize public ACLs and allow public access\n\n **The impact of this is...** \n If public ACL is attached to the bucket, anyone will be able to read and/or write to the bucket.\n\n **You can resolve this by...** \nSet `aws_s3_bucket_public_access_block` `ignore_public_acls` attribute to `true`, or use default"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "S3"
+                ],
+                "problem": {
+                  "severity": "high"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-TF-97"
+            },
+            {
+              "id": "SNYK-CC-TF-98",
+              "name": "S3RestrictPublicBucketControlIsDisabled",
+              "shortDescription": {
+                "text": "High severity - S3 restrict public bucket control is disabled"
+              },
+              "fullDescription": {
+                "text": "High severity - S3"
+              },
+              "help": {
+                "text": "The issue is... \nBucket will recognize public policies and allow public access\n\n The impact of this is... \n If public policy is attached to the bucket, anyone will be able to read and/or write to the bucket.\n\n You can resolve this by... \nSet `aws_s3_bucket_public_access_block` `restrict_public_buckets` attribute to `true`, or use default",
+                "markdown": "**The issue is...** \nBucket will recognize public policies and allow public access\n\n **The impact of this is...** \n If public policy is attached to the bucket, anyone will be able to read and/or write to the bucket.\n\n **You can resolve this by...** \nSet `aws_s3_bucket_public_access_block` `restrict_public_buckets` attribute to `true`, or use default"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "S3"
+                ],
+                "problem": {
+                  "severity": "high"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-TF-98"
+            },
+            {
+              "id": "SNYK-CC-TF-45",
+              "name": "S3ServerAccessLoggingIsDisabled",
+              "shortDescription": {
+                "text": "Low severity - S3 server access logging is disabled"
+              },
+              "fullDescription": {
+                "text": "Low severity - S3"
+              },
+              "help": {
+                "text": "The issue is... \nThe s3 access logs will not be collected\n\n The impact of this is... \n There will be no audit trail of access to s3 objects\n\n You can resolve this by... \nFor AWS provider < v4.0.0, add `logging` block attribute. For AWS provider >= v4.0.0, add aws_s3_bucket_logging resource.",
+                "markdown": "**The issue is...** \nThe s3 access logs will not be collected\n\n **The impact of this is...** \n There will be no audit trail of access to s3 objects\n\n **You can resolve this by...** \nFor AWS provider < v4.0.0, add `logging` block attribute. For AWS provider >= v4.0.0, add aws_s3_bucket_logging resource."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "S3"
+                ],
+                "problem": {
+                  "severity": "low"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-TF-45"
+            },
+            {
+              "id": "SNYK-CC-AWS-414",
+              "name": "RdsIamAuthenticationIsDisabled",
+              "shortDescription": {
+                "text": "Medium severity - RDS IAM authentication is disabled"
+              },
+              "fullDescription": {
+                "text": "Medium severity - RDS"
+              },
+              "help": {
+                "text": "The issue is... \nIAM database authentication is disabled, authentication tokens are not used to connect to DB instance\n\n The impact of this is... \n Users will connect to DB instance with password, which are less secure than temporary tokens which expire\n\n You can resolve this by... \nSet `iam_database_authentication_enabled` to `true`.",
+                "markdown": "**The issue is...** \nIAM database authentication is disabled, authentication tokens are not used to connect to DB instance\n\n **The impact of this is...** \n Users will connect to DB instance with password, which are less secure than temporary tokens which expire\n\n **You can resolve this by...** \nSet `iam_database_authentication_enabled` to `true`."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "RDS"
+                ],
+                "problem": {
+                  "severity": "medium"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-AWS-414"
+            },
+            {
+              "id": "SNYK-CC-TF-96",
+              "name": "S3BlockPublicPolicyControlIsDisabled",
+              "shortDescription": {
+                "text": "High severity - S3 block public policy control is disabled"
+              },
+              "fullDescription": {
+                "text": "High severity - S3"
+              },
+              "help": {
+                "text": "The issue is... \nBucket does not prevent creation of public policies\n\n The impact of this is... \n Anyone who can manage bucket's policies will be able to grant public access to the bucket.\n\n You can resolve this by... \nSet `aws_s3_bucket_public_access_block` `block_public_policy` attribute to `true`, or use default",
+                "markdown": "**The issue is...** \nBucket does not prevent creation of public policies\n\n **The impact of this is...** \n Anyone who can manage bucket's policies will be able to grant public access to the bucket.\n\n **You can resolve this by...** \nSet `aws_s3_bucket_public_access_block` `block_public_policy` attribute to `true`, or use default"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "S3"
+                ],
+                "problem": {
+                  "severity": "high"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-TF-96"
+            },
+            {
+              "id": "SNYK-CC-AWS-408",
+              "name": "RdsAutomaticBackupIsDisabled",
+              "shortDescription": {
+                "text": "Medium severity - RDS automatic backup is disabled"
+              },
+              "fullDescription": {
+                "text": "Medium severity - RDS"
+              },
+              "help": {
+                "text": "The issue is... \nAutomatic backup of AWS Relational Database is disabled\n\n The impact of this is... \n No automatic backups will occur, availability risk if disaster occurs and manual backups have not been set\n\n You can resolve this by... \nSet `resource.backup_retention_period` to `1` or more",
+                "markdown": "**The issue is...** \nAutomatic backup of AWS Relational Database is disabled\n\n **The impact of this is...** \n No automatic backups will occur, availability risk if disaster occurs and manual backups have not been set\n\n **You can resolve this by...** \nSet `resource.backup_retention_period` to `1` or more"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "RDS"
+                ],
+                "problem": {
+                  "severity": "medium"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-AWS-408"
+            },
+            {
+              "id": "SNYK-CC-TF-74",
+              "name": "CredentialsAreConfiguredViaProviderAttributes",
+              "shortDescription": {
+                "text": "High severity - Credentials are configured via provider attributes"
+              },
+              "fullDescription": {
+                "text": "High severity - Provider"
+              },
+              "help": {
+                "text": "The issue is... \nCredentials are configured via provider attributes\n\n The impact of this is... \n Use of provider attributes can lead to accidental disclosure of credentials in configuration files, variable definition files, event logs or console logs\n\n You can resolve this by... \nSet access credentials via environment variables, and remove `access_key` and `secret_key` attributes from the configuration",
+                "markdown": "**The issue is...** \nCredentials are configured via provider attributes\n\n **The impact of this is...** \n Use of provider attributes can lead to accidental disclosure of credentials in configuration files, variable definition files, event logs or console logs\n\n **You can resolve this by...** \nSet access credentials via environment variables, and remove `access_key` and `secret_key` attributes from the configuration"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "Provider"
+                ],
+                "problem": {
+                  "severity": "high"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-TF-74"
+            },
+            {
+              "id": "SNYK-CC-K8S-41",
+              "name": "ContainerIsRunningWithoutLivenessProbe",
+              "shortDescription": {
+                "text": "Low severity - Container is running without liveness probe"
+              },
+              "fullDescription": {
+                "text": "Low severity - Deployment"
+              },
+              "help": {
+                "text": "The issue is... \nLiveness probe is not defined\n\n The impact of this is... \n Kubernetes will not be able to detect if application is able to service requests, and will not restart unhealthy pods\n\n You can resolve this by... \nAdd `livenessProbe` attribute",
+                "markdown": "**The issue is...** \nLiveness probe is not defined\n\n **The impact of this is...** \n Kubernetes will not be able to detect if application is able to service requests, and will not restart unhealthy pods\n\n **You can resolve this by...** \nAdd `livenessProbe` attribute"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "Deployment"
+                ],
+                "problem": {
+                  "severity": "low"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-K8S-41"
+            },
+            {
+              "id": "SNYK-CC-K8S-4",
+              "name": "ContainerIsRunningWithoutMemoryLimit",
+              "shortDescription": {
+                "text": "Low severity - Container is running without memory limit"
+              },
+              "fullDescription": {
+                "text": "Low severity - Deployment"
+              },
+              "help": {
+                "text": "The issue is... \nMemory limit is not defined\n\n The impact of this is... \n Containers without memory limits are more likely to be terminated when the node runs out of memory\n\n You can resolve this by... \nSet `resources.limits.memory` value",
+                "markdown": "**The issue is...** \nMemory limit is not defined\n\n **The impact of this is...** \n Containers without memory limits are more likely to be terminated when the node runs out of memory\n\n **You can resolve this by...** \nSet `resources.limits.memory` value"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "Deployment"
+                ],
+                "problem": {
+                  "severity": "low"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-K8S-4"
+            },
+            {
+              "id": "SNYK-CC-K8S-42",
+              "name": "ContainerCouldBeRunningWithOutdatedImage",
+              "shortDescription": {
+                "text": "Low severity - Container could be running with outdated image"
+              },
+              "fullDescription": {
+                "text": "Low severity - Deployment"
+              },
+              "help": {
+                "text": "The issue is... \nThe image policy does not prevent image reuse\n\n The impact of this is... \n The container may run with outdated or unauthorized image\n\n You can resolve this by... \nSet `imagePullPolicy` attribute to `Always`",
+                "markdown": "**The issue is...** \nThe image policy does not prevent image reuse\n\n **The impact of this is...** \n The container may run with outdated or unauthorized image\n\n **You can resolve this by...** \nSet `imagePullPolicy` attribute to `Always`"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "Deployment"
+                ],
+                "problem": {
+                  "severity": "low"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-K8S-42"
+            },
+            {
+              "id": "SNYK-CC-K8S-9",
+              "name": "ContainerIsRunningWithoutPrivilegeEscalationControl",
+              "shortDescription": {
+                "text": "Medium severity - Container is running without privilege escalation control"
+              },
+              "fullDescription": {
+                "text": "Medium severity - Pod"
+              },
+              "help": {
+                "text": "The issue is... \n`allowPrivilegeEscalation` attribute is not set to `false`\n\n The impact of this is... \n Processes could elevate current privileges via known vectors, for example SUID binaries\n\n You can resolve this by... \nSet `spec.{containers, initContainers}.securityContext.allowPrivilegeEscalation` to `false`",
+                "markdown": "**The issue is...** \n`allowPrivilegeEscalation` attribute is not set to `false`\n\n **The impact of this is...** \n Processes could elevate current privileges via known vectors, for example SUID binaries\n\n **You can resolve this by...** \nSet `spec.{containers, initContainers}.securityContext.allowPrivilegeEscalation` to `false`"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "Pod"
+                ],
+                "problem": {
+                  "severity": "medium"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-K8S-9"
+            },
+            {
+              "id": "SNYK-CC-K8S-11",
+              "name": "ContainersOrPodsUidCouldClashWithHostsUid",
+              "shortDescription": {
+                "text": "Low severity - Container's or Pod's  UID could clash with host's UID"
+              },
+              "fullDescription": {
+                "text": "Low severity - Deployment"
+              },
+              "help": {
+                "text": "The issue is... \n`runAsUser` value is set to low UID\n\n The impact of this is... \n UID of the container processes could clash with host's UIDs and lead to unintentional authorization bypass\n\n You can resolve this by... \nSet `securityContext.runAsUser` value to greater or equal than 10'000. SecurityContext can be set on both `pod` and `container` level. If both are set, then the container level takes precedence",
+                "markdown": "**The issue is...** \n`runAsUser` value is set to low UID\n\n **The impact of this is...** \n UID of the container processes could clash with host's UIDs and lead to unintentional authorization bypass\n\n **You can resolve this by...** \nSet `securityContext.runAsUser` value to greater or equal than 10'000. SecurityContext can be set on both `pod` and `container` level. If both are set, then the container level takes precedence"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "Deployment"
+                ],
+                "problem": {
+                  "severity": "low"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-K8S-11"
+            },
+            {
+              "id": "SNYK-CC-K8S-5",
+              "name": "ContainerHasNoCpuLimit",
+              "shortDescription": {
+                "text": "Low severity - Container has no CPU limit"
+              },
+              "fullDescription": {
+                "text": "Low severity - Deployment"
+              },
+              "help": {
+                "text": "The issue is... \nContainer has no CPU limit\n\n The impact of this is... \n CPU limits can prevent containers from consuming valuable compute time for no benefit (e.g. inefficient code) that might lead to unnecessary costs. It is advisable to also configure CPU requests to ensure application stability.\n\n You can resolve this by... \nAdd `resources.limits.cpu` field with required CPU limit value",
+                "markdown": "**The issue is...** \nContainer has no CPU limit\n\n **The impact of this is...** \n CPU limits can prevent containers from consuming valuable compute time for no benefit (e.g. inefficient code) that might lead to unnecessary costs. It is advisable to also configure CPU requests to ensure application stability.\n\n **You can resolve this by...** \nAdd `resources.limits.cpu` field with required CPU limit value"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "Deployment"
+                ],
+                "problem": {
+                  "severity": "low"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-K8S-5"
+            },
+            {
+              "id": "SNYK-CC-K8S-6",
+              "name": "ContainerDoesNotDropAllDefaultCapabilities",
+              "shortDescription": {
+                "text": "Medium severity - Container does not drop all default capabilities"
+              },
+              "fullDescription": {
+                "text": "Medium severity - Deployment"
+              },
+              "help": {
+                "text": "The issue is... \nAll default capabilities are not explicitly dropped\n\n The impact of this is... \n Containers are running with potentially unnecessary privileges\n\n You can resolve this by... \nAdd `ALL` to `securityContext.capabilities.drop` list, and add only required capabilities in `securityContext.capabilities.add`",
+                "markdown": "**The issue is...** \nAll default capabilities are not explicitly dropped\n\n **The impact of this is...** \n Containers are running with potentially unnecessary privileges\n\n **You can resolve this by...** \nAdd `ALL` to `securityContext.capabilities.drop` list, and add only required capabilities in `securityContext.capabilities.add`"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "Deployment"
+                ],
+                "problem": {
+                  "severity": "medium"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-K8S-6"
+            },
+            {
+              "id": "SNYK-CC-K8S-8",
+              "name": "ContainerIsRunningWithWritableRootFilesystem",
+              "shortDescription": {
+                "text": "Low severity - Container is running with writable root filesystem"
+              },
+              "fullDescription": {
+                "text": "Low severity - Pod"
+              },
+              "help": {
+                "text": "The issue is... \n`readOnlyRootFilesystem` attribute is not set to `true`\n\n The impact of this is... \n Compromised process could abuse writable root filesystem to elevate privileges\n\n You can resolve this by... \nSet `spec.{containers, initContainers}.securityContext.readOnlyRootFilesystem` to `true`",
+                "markdown": "**The issue is...** \n`readOnlyRootFilesystem` attribute is not set to `true`\n\n **The impact of this is...** \n Compromised process could abuse writable root filesystem to elevate privileges\n\n **You can resolve this by...** \nSet `spec.{containers, initContainers}.securityContext.readOnlyRootFilesystem` to `true`"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "Pod"
+                ],
+                "problem": {
+                  "severity": "low"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-K8S-8"
+            },
+            {
+              "id": "SNYK-CC-K8S-10",
+              "name": "ContainerOrPodIsRunningWithoutRootUserControl",
+              "shortDescription": {
+                "text": "Medium severity - Container or Pod is running without root user control"
+              },
+              "fullDescription": {
+                "text": "Medium severity - Deployment"
+              },
+              "help": {
+                "text": "The issue is... \nContainer or Pod is running without root user control\n\n The impact of this is... \n Container or Pod could be running with full administrative privileges\n\n You can resolve this by... \nSet `securityContext.runAsNonRoot` to `true`",
+                "markdown": "**The issue is...** \nContainer or Pod is running without root user control\n\n **The impact of this is...** \n Container or Pod could be running with full administrative privileges\n\n **You can resolve this by...** \nSet `securityContext.runAsNonRoot` to `true`"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "Deployment"
+                ],
+                "problem": {
+                  "severity": "medium"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-K8S-10"
+            },
+            {
+              "id": "SNYK-CC-K8S-1",
+              "name": "PrivilegedContainer",
+              "shortDescription": {
+                "text": "High severity - Privileged container"
+              },
+              "fullDescription": {
+                "text": "High severity - Deployment"
+              },
+              "help": {
+                "text": "The issue is... \nContainer is running in privileged mode\n\n The impact of this is... \n Compromised container could potentially modify the underlying host’s kernel by loading unauthorized modules (i.e. drivers).\n\n You can resolve this by... \nRemove `securityContext.privileged` attribute, or set value to `false`",
+                "markdown": "**The issue is...** \nContainer is running in privileged mode\n\n **The impact of this is...** \n Compromised container could potentially modify the underlying host’s kernel by loading unauthorized modules (i.e. drivers).\n\n **You can resolve this by...** \nRemove `securityContext.privileged` attribute, or set value to `false`"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "Deployment"
+                ],
+                "problem": {
+                  "severity": "high"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-K8S-1"
+            },
+            {
+              "id": "SNYK-CC-TF-56",
+              "name": "SecurityGroupDescriptionIsMissing",
+              "shortDescription": {
+                "text": "Low severity - Security group description is missing"
+              },
+              "fullDescription": {
+                "text": "Low severity - VPC"
+              },
+              "help": {
+                "text": "The issue is... \nThe description field is missing in the security group\n\n The impact of this is... \n Increases the security management overhead\n\n You can resolve this by... \nSet `description` attribute to meaningful statement",
+                "markdown": "**The issue is...** \nThe description field is missing in the security group\n\n **The impact of this is...** \n Increases the security management overhead\n\n **You can resolve this by...** \nSet `description` attribute to meaningful statement"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "VPC"
+                ],
+                "problem": {
+                  "severity": "low"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-TF-56"
+            },
+            {
+              "id": "SNYK-CC-TF-1",
+              "name": "SecurityGroupAllowsOpenIngress",
+              "shortDescription": {
+                "text": "Medium severity - Security Group allows open ingress"
+              },
+              "fullDescription": {
+                "text": "Medium severity - VPC"
+              },
+              "help": {
+                "text": "The issue is... \nThat inbound traffic is allowed to a resource from any source instead of a restricted range\n\n The impact of this is... \n That potentially everyone can access your resource\n\n You can resolve this by... \nSet `cidr_block` attribute with a more restrictive IP, for example `192.16.0.0/24`",
+                "markdown": "**The issue is...** \nThat inbound traffic is allowed to a resource from any source instead of a restricted range\n\n **The impact of this is...** \n That potentially everyone can access your resource\n\n **You can resolve this by...** \nSet `cidr_block` attribute with a more restrictive IP, for example `192.16.0.0/24`"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "VPC"
+                ],
+                "problem": {
+                  "severity": "medium"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-TF-1"
+            },
+            {
+              "id": "SNYK-CC-TF-73",
+              "name": "AwsSecurityGroupAllowsOpenEgress",
+              "shortDescription": {
+                "text": "Low severity - AWS Security Group allows open egress"
+              },
+              "fullDescription": {
+                "text": "Low severity - VPC"
+              },
+              "help": {
+                "text": "The issue is... \nThe inline security group rule allows open egress\n\n The impact of this is... \n Open egress can be used to exfiltrate data to unauthorized destinations, and enable access to potentially malicious resources\n\n You can resolve this by... \nSet `egress.cidr_blocks` attribute to specific ranges e.g. `192.168.1.0/24`",
+                "markdown": "**The issue is...** \nThe inline security group rule allows open egress\n\n **The impact of this is...** \n Open egress can be used to exfiltrate data to unauthorized destinations, and enable access to potentially malicious resources\n\n **You can resolve this by...** \nSet `egress.cidr_blocks` attribute to specific ranges e.g. `192.168.1.0/24`"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "VPC"
+                ],
+                "problem": {
+                  "severity": "low"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-TF-73"
+            },
+            {
+              "id": "SNYK-CC-TF-95",
+              "name": "S3BlockPublicAcLsControlIsDisabled",
+              "shortDescription": {
+                "text": "High severity - S3 block public ACLs control is disabled"
+              },
+              "fullDescription": {
+                "text": "High severity - S3"
+              },
+              "help": {
+                "text": "The issue is... \nBucket does not prevent creation of public ACLs\n\n The impact of this is... \n Anyone who can manage bucket's ACLs will be able to grant public access to the bucket\n\n You can resolve this by... \nSet the `aws_s3_bucket_public_access_block` `block_public_acls` field to `true` or use the default setting",
+                "markdown": "**The issue is...** \nBucket does not prevent creation of public ACLs\n\n **The impact of this is...** \n Anyone who can manage bucket's ACLs will be able to grant public access to the bucket\n\n **You can resolve this by...** \nSet the `aws_s3_bucket_public_access_block` `block_public_acls` field to `true` or use the default setting"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "S3"
+                ],
+                "problem": {
+                  "severity": "high"
+                }
+              },
+              "helpUri": "https://security.snyk.io/rules/cloud/SNYK-CC-TF-95"
+            }
+          ]
+        }
+      },
+      "automationDetails": {
+        "id": "Snyk/IaC/juice-shop/2025-11-13T15:10:31.398Z"
+      },
+      "results": [
+        {
+          "ruleId": "SNYK-CC-TF-124",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tf-plan.json",
+                  "uriBaseId": "PROJECTROOT"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-127",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tf-plan.json",
+                  "uriBaseId": "PROJECTROOT"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-127",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tf-plan.json",
+                  "uriBaseId": "PROJECTROOT"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-97",
+          "message": {
+            "text": "This line contains a potential high severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tf-plan.json",
+                  "uriBaseId": "PROJECTROOT"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-98",
+          "message": {
+            "text": "This line contains a potential high severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tf-plan.json",
+                  "uriBaseId": "PROJECTROOT"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-124",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tf-plan.json",
+                  "uriBaseId": "PROJECTROOT"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-45",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tf-plan.json",
+                  "uriBaseId": "PROJECTROOT"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-AWS-414",
+          "message": {
+            "text": "This line contains a potential medium severity misconfiguration affecting the RDS"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tf-plan.json",
+                  "uriBaseId": "PROJECTROOT"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-96",
+          "message": {
+            "text": "This line contains a potential high severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tf-plan.json",
+                  "uriBaseId": "PROJECTROOT"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-AWS-408",
+          "message": {
+            "text": "This line contains a potential medium severity misconfiguration affecting the RDS"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tf-plan.json",
+                  "uriBaseId": "PROJECTROOT"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-98",
+          "message": {
+            "text": "This line contains a potential high severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tf-plan.json",
+                  "uriBaseId": "PROJECTROOT"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-45",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tf-plan.json",
+                  "uriBaseId": "PROJECTROOT"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-74",
+          "message": {
+            "text": "This line contains a potential high severity misconfiguration affecting the Provider"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-41",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the Deployment"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "k8s-src/juice-shop-deploy.yaml",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 18
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-4",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the Deployment"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "k8s-src/juice-shop-deploy.yaml",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 18
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-42",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the Deployment"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "k8s-src/juice-shop-deploy.yaml",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 20
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-9",
+          "message": {
+            "text": "This line contains a potential medium severity misconfiguration affecting the Pod"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "k8s-src/juice-shop-deploy.yaml",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 23
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-11",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the Deployment"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "k8s-src/juice-shop-deploy.yaml",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 23
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-5",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the Deployment"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "k8s-src/juice-shop-deploy.yaml",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 18
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-6",
+          "message": {
+            "text": "This line contains a potential medium severity misconfiguration affecting the Deployment"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "k8s-src/juice-shop-deploy.yaml",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 23
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-8",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the Pod"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "k8s-src/juice-shop-deploy.yaml",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 23
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-10",
+          "message": {
+            "text": "This line contains a potential medium severity misconfiguration affecting the Deployment"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "k8s-src/juice-shop-deploy.yaml",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 23
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-K8S-1",
+          "message": {
+            "text": "This line contains a potential high severity misconfiguration affecting the Deployment"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "k8s-src/juice-shop-deploy.yaml",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 24
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-56",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the VPC"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/security-groups/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 32
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-56",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the VPC"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/security-groups/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 17
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-1",
+          "message": {
+            "text": "This line contains a potential medium severity misconfiguration affecting the VPC"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/security-groups/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 58
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-56",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the VPC"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/security-groups/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 49
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-73",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the VPC"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/security-groups/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 66
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-56",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the VPC"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/security-groups/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-124",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/storage/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 85
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-127",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/storage/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 85
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-127",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/storage/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 78
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-97",
+          "message": {
+            "text": "This line contains a potential high severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/storage/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 94
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-98",
+          "message": {
+            "text": "This line contains a potential high severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/storage/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 90
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-124",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/storage/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 78
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-45",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/storage/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 78
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-AWS-414",
+          "message": {
+            "text": "This line contains a potential medium severity misconfiguration affecting the RDS"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/storage/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 20
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-96",
+          "message": {
+            "text": "This line contains a potential high severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/storage/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 95
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-AWS-408",
+          "message": {
+            "text": "This line contains a potential medium severity misconfiguration affecting the RDS"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/storage/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 20
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-98",
+          "message": {
+            "text": "This line contains a potential high severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/storage/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 98
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-45",
+          "message": {
+            "text": "This line contains a potential low severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/storage/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 85
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-CC-TF-95",
+          "message": {
+            "text": "This line contains a potential high severity misconfiguration affecting the S3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "terraform/modules/storage/main.tf",
+                  "uriBaseId": "PROJECTROOT"
+                },
+                "region": {
+                  "startLine": 85
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
