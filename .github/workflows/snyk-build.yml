@@ -147,3 +147,44 @@ jobs:
           sarif_file: container-scan-patched.sarif
           category: container-scan
 
+      # ================================
+      # GATING THE BUILD BASED ON SCAN RESULTS
+      # ================================
+      - name: Verify Scan Results
+        if: always() # Run this even if previous steps "failed" or errored
+        run: |
+          # 1. Define your files (List all the SARIF files you created above)
+          files=("code-scan.sarif" "frontend-deps.sarif" "container-scan-patched.sarif")
+          
+          fail_build=false
+
+          echo "============================="
+          echo "Checking Scan Results..."
+          echo "============================="
+
+          for file in "${files[@]}"; do
+            if [ -f "$file" ]; then
+              # Count the results in the JSON
+              count=$(jq '.runs[0].results | length' "$file")
+              
+              if [ "$count" -gt 0 ]; then
+                echo "❌ Failure: $file contains $count vulnerabilities."
+                fail_build=true
+              else
+                echo "✅ Success: $file is clean."
+              fi
+            else
+              echo "⚠️ Warning: $file was not found. Did the scan run?"
+            fi
+          done
+
+          echo "============================="
+
+          if [ "$fail_build" = true ]; then
+            echo "::error::Security vulnerabilities were found. Failing the build."
+            exit 1
+          else
+            echo "All scans passed!"
+            exit 0
+          fi
+
