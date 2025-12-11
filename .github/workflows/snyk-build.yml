@@ -96,7 +96,7 @@ jobs:
           category: code-scan
 
 
-# ================================
+      # ================================
       # Setup Docker
       # ================================
       - name: Set up Docker Build
@@ -118,12 +118,32 @@ jobs:
         with:
           command: container test docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ vars.IMAGE_TAG }}:latest
           args: '--sarif-file-output=container-scan.sarif --severity-threshold=low'
+      - name: Patch Snyk Container SARIF
+        run: |
+          # Install jq if not present (standard on ubuntu-latest)
+          # This script maps text severities to the numbers GitHub expects
+          jq '
+            (.runs[].tool.driver.rules[] | select(.properties["security-severity"] == "null")) 
+            |= (.properties["security-severity"] = "0.0") 
+            | 
+            (.runs[].tool.driver.rules[]) |= (
+              .properties["security-severity"] |= (
+                if . == "null" or . == null then
+                  if .properties.severity == "Critical" then "9.5"
+                  elif .properties.severity == "High" then "8.0"
+                  elif .properties.severity == "Medium" then "5.0"
+                  elif .properties.severity == "Low" then "2.0"
+                  else "0.0" end
+                else . end
+              )
+            )
+          ' container-scan.sarif > container-scan-patched.sarif
 
       - name: Upload container scan report
         uses: github/codeql-action/upload-sarif@v3
-        # This condition is correct: always run, but only upload if file exists
-        if: always() && hashFiles('container-scan.sarif') != ''
+        if: always()
         with:
-          sarif_file: container-scan.sarif
+          # Make sure to upload the PATCHED file, not the original
+          sarif_file: container-scan-patched.sarif
           category: container-scan
 
